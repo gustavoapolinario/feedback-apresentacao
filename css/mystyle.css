@@ -1,0 +1,86 @@
+/********************************
+  HELPERS
+  ******************************/
+header{
+  padding:10px;
+  margin-bottom:16px;
+}
+header p{
+  position: relative;
+  top:-38px;
+  right:16px;
+  font-size:16px;
+}
+.uppercase{
+  text-transform: uppercase;
+}
+.my-panel .card-panel{
+  height:125px;
+}
+.flex{
+  display: flex;
+}
+
+/******************************
+  PADDINGS
+  ****************************/
+.padding{
+  padding:10px 20px !important;
+}
+.padding-top{
+  padding-top:10px !important;
+}
+.padding-right{
+  padding-right:20px !important;
+}
+.padding-bottom{
+  padding-bottom:10px !important;
+}
+.padding-left{
+  padding-left:20px !important;
+}
+
+/******************************
+  MARGENS
+  ****************************/
+.margin{
+  margin:15px;
+}
+.margin-top5{
+  margin:5px;
+}
+.margin-right5{
+  margin-right:5px
+}
+.margin-bottom5{
+  margin-bottom:5px
+}
+.margin-left5{
+  margin-left:5px
+}
+
+/******************************
+  OPACIDADE
+  ****************************/
+.opacity100{
+  opacity: 1;
+}
+.opacity75{
+  opacity: .75;
+}
+.opacity50{
+  opacity: .5;
+}
+.opacity25{
+  opacity: .25;
+}
+.opacity0{
+  opacity: 0;
+}
+
+/******************************
+  LISTAS
+  ****************************/
+.inline-list li{
+  display:inline;
+}

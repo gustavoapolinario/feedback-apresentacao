@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Estudo Materialized</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/mystyle.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body class="grey lighten-3">
+    <header class="z-depth-1 blue">
+      <ul id="slide-out" class="side-nav">
+        <li>
+            <div class="user-view">
+              <div class="background blue"></div>
+              <a href="#!user"><img class="circle" src="img/ranieri.png"></a>
+              <a href="#!name"><span class="white-text name">Felipe Ranieri</span></a>
+              <a href="#!email"><span class="white-text email">felipe.ranieri@email.com.br</span></a>
+          </div>
+        </li>
+
+        <li>
+          <a href="administracao.html" class="waves-effect">
+            <i class="material-icons small blue-text">account_circle</i>Minha conta
+          </a>
+        </li>
+        <li>
+          <a href="administracao.html" class="waves-effect">
+            <i class="material-icons small blue-text">computer</i>Administração
+          </a>
+        </li>
+        <li>
+          <a href="#!" class="waves-effect">
+            <i class="material-icons small blue-text">trending_up</i>Relatórios
+          </a>
+        </li>
+        <li>
+          <a href="#!" class="waves-effect">
+            <i class="material-icons small red-text darken-1">close</i>Sair
+          </a>
+        </li>
+      </ul>
+      <a href="#" data-activates="slide-out" class="button-collapse flex">
+        <i class="material-icons white-text">menu</i>
+      </a>
+      <p class="right white-text">chooseMoreKnowledge</p>
+    </header>
+
+    <h2 class="flow-text margin valign-wrapper">
+      <i class="material-icons small blue-text">computer</i>&nbsp;Administração
+    </h2>
+    <div class="row my-panel">
+      <div class="center col m2 s12">
+        <a href="#" class="card-panel left z-depth-1 col s12 padding black-text">
+          <i class="material-icons medium blue-text">create</i><br>
+          Gerenciamento de reviews/ciclos
+        </a>
+      </div>
+      <div class="center col m2 s12">
+        <a href="#"  class="modal-trigger card-panel left z-depth-1 col s12 padding black-text">
+          <i class="material-icons medium blue-text">people</i><br>
+          Pessoas/Acessos
+        </a>
+      </div>
+      <div class="center col m2 s12">
+        <a href="#" class="card-panel left z-depth-1 col s12 padding black-text">
+          <i class="material-icons medium blue-text">gavel</i><br>
+          Agendamento
+      </a>
+      </div>
+      <div class="center col m2 s12">
+        <a href="#" class="card-panel left z-depth-1 col s12 padding black-text">
+          <i class="material-icons medium blue-text">tune</i><br>
+          Configurações pessoais
+        </a>
+      </div>
+      <div class="center col m2 s12">
+        <a href="#" class="card-panel left z-depth-1 col s12 padding black-text">
+          <i class="material-icons medium blue-text">email</i><br>
+          Envio de e-mails para usuários cadastrados
+        </a>
+      </div>
+      <div class="center col m2 s12">
+        <a href="#" class="card-panel left z-depth-1 col s12 padding black-text">
+          <i class="material-icons medium yellow-text darken-3">tag_faces</i><br>
+          Sugerir melhorias
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Modal Structure -->
+    <div id="myModal" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4 class="flow-text">Pessoas/Acessos</h4>
+        <ul class="collection">
+          <li class="collection-item">
+            <a href="pessoas.html" class="black-text lighten-1 valign-wrapper">
+              <i class="material-icons blue-text">people</i>&nbsp;Pessoas
+            </a>
+          </li>
+          <li class="collection-item">
+            <a href="#" class="black-text lighten-1 valign-wrapper">
+              <i class="material-icons blue-text">security</i>&nbsp;Perfil de acesso usuários
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Fechar</a>
+      </div>
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        //inicializando menu lateral
+        $(".button-collapse").sideNav();
+        //inicializando modal
+        $('.modal').modal();
+      });
+    </script>
+  </body>
+</html>
