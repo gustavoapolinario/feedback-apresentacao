@@ -1,4 +1,3 @@
-//instalando serviceWorker
 var CACHE_NAME = 'v0.8';
 var urlsToCache = [
   '/',
