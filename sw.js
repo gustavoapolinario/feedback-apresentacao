@@ -1,5 +1,5 @@
 //instalando serviceWorker
-var CACHE_NAME = 'v7';
+var CACHE_NAME = 'v0.6';
 var urlsToCache = [
   '/',
   '/css/materialize.min.css',
