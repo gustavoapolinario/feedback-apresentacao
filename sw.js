@@ -1,4 +1,4 @@
-var CACHE_NAME = 'v0.99';
+var CACHE_NAME = 'v0.2';
 var urlsToCache = [
   '/',
   '/css/materialize.min.css',
