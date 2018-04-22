@@ -49,7 +49,6 @@
         constructor() {
             super();
             var presentationListModel = new PresentationListModel();
-            var jsonReturned = '';
             presentationListModel.getList()
                 .then(json => {
                     this.presentations = json

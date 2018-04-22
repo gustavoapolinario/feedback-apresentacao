@@ -44,8 +44,8 @@
                     por: [[presentation.apresentador]]
                 </p>
             </article>
-            <div class$="card-actions {{_classVoted()}}">
-                <iron-icon icon="icons:favorite-border"></iron-icon>
+            <div class$="card-actions {{_classVoted(this.voted)}}">
+                <iron-icon icon="icons:{{_classFavoriteVoted(this.voted)}}" on-click="_votar"></iron-icon>
                 <paper-button class="fr">#queroTeVerNoCiclo</paper-button>
             </div>
         </paper-card>
@@ -59,11 +59,29 @@
                     type: Object,
                     readOnly: false,
                     notify: true
-                }
+                },
+                voted: {
+                    type: Boolean,
+                    readOnly: false,
+                    notify: true
+                },
             }
         }
-        _classVoted() {
-            return this.presentation.votado ? 'active' : 'inactive';
+        _classVoted(voted) {
+            return this.voted ? 'active' : 'inactive';
+        }
+        _classFavoriteVoted(voted) {
+            return this.voted ? 'favorite' : 'favorite-border';
+        }
+        ready() {
+            super.ready();
+            this.voted = localStorage.getItem(this.presentation.id + "-voto") == 1;
+            this.notifyPath('this.voted', 'changed');
+        }
+        _votar() {
+            this.voted = this.voted ? 0 : 1;
+            localStorage.setItem(this.presentation.id + "-voto", this.voted);
+            this.notifyPath('this.voted', 'changed');
         }
     }
     customElements.define(PresentationListItem.is, PresentationListItem);
