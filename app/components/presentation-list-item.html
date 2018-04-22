@@ -36,9 +36,12 @@
 
         <paper-card>
             <article class="card-content">
-                <h2 class="blue-text flow-text">[[presentation.title]]</h2>
+                <h2 class="blue-text flow-text">[[presentation.titulo]]</h2>
                 <p>
-                    [[presentation.text]]
+                    [[presentation.descricao]]
+                </p>
+                <p>
+                    por: [[presentation.apresentador]]
                 </p>
             </article>
             <div class$="card-actions {{_classVoted()}}">
@@ -60,7 +63,7 @@
             }
         }
         _classVoted() {
-            return this.presentation.voted ? 'active' : 'inactive';
+            return this.presentation.votado ? 'active' : 'inactive';
         }
     }
     customElements.define(PresentationListItem.is, PresentationListItem);
