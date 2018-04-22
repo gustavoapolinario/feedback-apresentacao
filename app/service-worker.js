@@ -1,10 +1,9 @@
-var CACHE_NAME = 'v0.2';
+var CACHE_NAME = 'v1';
 var urlsToCache = [
-	'/',
-	'/css/materialize.min.css',
-	'/css/mystyle.css',
-	'/js/materialize.min.js',
-	'/administracao.html'
+	'./',
+	'css/materialize.min.css',
+	'css/mystyle.css',
+	'js/materialize.min.js'
 ];
 
 self.addEventListener('install', function(event) {
