@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="presentation-list-item.html">
+
+<dom-module id="presentation-list">
+    <template>
+        <style is="custom-style">
+            .col {
+                float: left;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 0 .75rem;
+                min-height: 1px;
+            }
+            .col.s12 {
+                width: 100%;
+                margin-left: auto;
+                left: auto;
+                right: auto;
+            }
+            @media only screen and (min-width: 601px) {
+                .col.m4 {
+                    width: 33.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+            }
+        </style>
+        <template is="dom-repeat" items="{{presentationList}}">
+            <presentation-list-item is="dom-repeat" name="presentation-list-item"
+                        presentation="{{item}}"
+                        class="col m4 s12"></presentation-list-item>
+        </template>
+    </template>
+    <script>
+    class PresentationList extends Polymer.Element {
+        static get is() { return 'presentation-list'; }
+        static get properties() {
+            return {
+                presentationList: {
+                    type: Object,
+                    readOnly: false,
+                    notify: true,
+                    value: [
+                        {title:'Time xpto fala sobre carros', text: 'É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação.', voted: false},
+                        {title:'QA apresenta: Jasmine e jUnit', text: 'Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico.', voted: false},
+                        {title:'Javascript na unha, por: Gustavo', text: 'Existem muitas variações disponíveis de passagens de Lorem Ipsum, mas a maioria sofreu algum tipo de alteração, seja por inserção de passagens com humor, ou palavras aleatórias que não parecem nem um pouco convincentes.', voted: true},
+                        {title:'Semântica e acessibilidade', text: 'O trecho padrão original de Lorem Ipsum, usado desde o século XVI, está reproduzido abaixo para os interessados. Seções 1.10.32 e 1.10.33 de "de Finibus Bonorum et Malorum" de Cicero também foram reproduzidas abaixo em sua forma exata original, acompanhada das versões para o inglês da tradução feita por H. Rackham em 1914.', voted: false},
+                        {title:'AWS e seus benefícios', text: 'Ele usa um dicionário com mais de 200 palavras em Latim combinado com um punhado de modelos de estrutura de frases para gerar um Lorem Ipsum com aparência razoável, livre de repetições, inserções de humor, palavras não características, etc.', voted: false},
+                        {title:'Indicadores comerciais', text: 'Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por \'lorem ipsum\' mostra vários websites ainda em sua fase de construção.', voted: false}
+                    ]
+                }
+            }
+        }
+    }
+    customElements.define(PresentationList.is, PresentationList);
+    </script>
+</dom-module>

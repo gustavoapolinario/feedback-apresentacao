@@ -1,0 +1,19 @@
+{
+  "name": "feedback-apresentacao",
+  "homepage": "https://github.com/gustavoapolinario/feedback-apresentacao",
+  "description": "App para Feedback das apresentacoes",
+  "main": "index.html",
+  "license": "CC BY-NC-ND 4.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.6.0",
+    "paper-card": "PolymerElements/paper-card#^2.1.0",
+    "iron-icons": "PolymerElements/iron-icons#^2.1.1"
+  }
+}
