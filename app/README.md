@@ -1,2 +1,0 @@
-# chooseMoreKnowledge
-Protótipo chooseMoreKnowledge
