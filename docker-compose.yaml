@@ -1,0 +1,7 @@
+
+web:
+  image: jojomi/nginx-static
+  volumes:
+    - ./feedback-apresentacao:/var/www
+  ports:
+    - 8080:80
