@@ -18,7 +18,7 @@ class Login {
         this._uid = value;
     }
 
-    createUser(resolve, reject) {
+    createUser() {
         var apiUrl = this.apiUrl;
 
         var body = {

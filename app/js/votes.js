@@ -1,11 +1,11 @@
 "usea strict";
-class PresentationListModel {
+class PresentationVote {
     get apiUrl() {
         return 'json/apresentacoes.html'
         //return 'https://feedback-apresentacao.herokuapp.com/api/apresentacoes';
     }
 
-    getList() {
+    addVoteToPresentation(presentationId) {
         var apiUrl = this.apiUrl;
 
         return new Promise((resolve, reject) => {
