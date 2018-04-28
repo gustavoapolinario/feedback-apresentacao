@@ -1,17 +1,18 @@
+
 var CACHE_NAME = 'v1';
 var urlsToCache = [
 	'./',
 	'css/materialize.min.css',
 	'css/mystyle.css',
 	'js/materialize.min.js',
-	'favicon.ico',
+	//'favicon.ico',
 	'https://code.jquery.com/jquery-3.2.1.min.js',
 	'manifest.json',
 	'fonts/roboto/Roboto-Medium.woff2',
 	'fonts/roboto/Roboto-Regular.woff2',
 	'fonts/roboto/Roboto-Light.woff2',
 	'fonts/roboto/Roboto-Regular.woff',
-	'fonts/roboto/Roboto-Light.woff',
+	'fonts/roboto/Roboto-Light.woff'
 ];
 
 self.addEventListener('install', function(event) {
@@ -30,9 +31,7 @@ self.addEventListener('activate', event => {
 		caches.keys().then(cacheNames => {
 			return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
 		}).then(cachesToDelete => {
-			return Promise.all(cachesToDelete.map(cacheToDelete => {
-				return caches.delete(cacheToDelete);
-			}));
+			return Promise.all(cachesToDelete.map(cacheToDelete => caches.delete(cacheToDelete) ));
 		}).then(() => self.clients.claim())
 	);
 });
@@ -41,10 +40,7 @@ self.addEventListener('fetch', function(event) {
 	event.respondWith(
 		caches.match(event.request)
 			.then(function(response) {
-				if (response) {
-					return response;
-				}
-				return fetch(event.request);
+				return response ? response : fetch(event.request);
 			}
 		)
 	);

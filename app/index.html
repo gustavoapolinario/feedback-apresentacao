@@ -11,7 +11,8 @@
 
 		<link rel="manifest" href="/manifest.json">
 		<script src="service-worker-register.js"></script>
-		<link rel="import" href="components/presentation-list.html">
+		<link rel="import" href="bower_components/polymer/polymer.html">
+		<link rel="import" href="bower_components/paper-spinner/paper-spinner-lite.html">
 	</head>
 	<body class="grey lighten-3">
 		<header class="z-depth-1 blue">
@@ -53,21 +54,24 @@
 		</header>
 		<div class="container">
 			<h1 class="flow-text center">Qual assunto você gostaria de ver no ciclo de aprimoramento?</h1>
-			<section class="row">
-				<presentation-list class="row"></presentation-list>
-
-			</section>
+			<paper-spinner-lite active class="margin-center flex"></paper-spinner-lite>
 		</div>
 
-		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="js/materialize.min.js"></script>
 		<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-		<link rel="import" href="bower_components/polymer/polymer.html">
+		<script src="js/verify-login.js"></script>
 		<script>
 			$(document).ready(function() {
 				$(".button-collapse").sideNav();
 				$('.tooltipped').tooltip();
 			});
+			if( VerifyLogin.isLogged ) {
+				document.location = 'presentation-list.html'
+			}
+			else {
+				document.location = 'login.html'
+			}
 		</script>
 	</body>
 </html>

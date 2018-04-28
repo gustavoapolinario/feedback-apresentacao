@@ -58,6 +58,9 @@ header p{
 .margin-left5{
   margin-left:5px
 }
+.margin-center {
+  margin: auto;
+}
 
 /******************************
   OPACIDADE

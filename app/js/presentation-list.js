@@ -10,16 +10,16 @@ class PresentationListModel {
 
         return new Promise((resolve, reject) => {
             fetch(apiUrl)
-            .then(function(response) {
+            .then(response => {
                 if(response.ok) {
-                    response.json().then(function(json) {
+                    response.json().then(json => {
                         resolve(json);
                     });
                 }
                 else {
                     reject('Erro ao tentar pegar a lista de apresentações')
                 }
-              })
+            })
               
         });
     }

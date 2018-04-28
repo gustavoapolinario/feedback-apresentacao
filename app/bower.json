@@ -14,6 +14,10 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.6.0",
     "paper-card": "PolymerElements/paper-card#^2.1.0",
-    "iron-icons": "PolymerElements/iron-icons#^2.1.1"
+    "iron-icons": "PolymerElements/iron-icons#^2.1.1",
+    "paper-spinner": "^2.1.0",
+    "polymerfire": "^2.2.1",
+    "paper-button": "^2.1.1",
+    "firebase": "^4.12.0"
   }
 }

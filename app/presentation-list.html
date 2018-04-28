@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Feedback Apresentação</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/mystyle.css"  media="screen,projection"/>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link rel="manifest" href="/manifest.json">
+		<script src="service-worker-register.js"></script>
+		<link rel="import" href="polymer-components/presentation-list.html">
+	</head>
+	<body class="grey lighten-3">
+		<header class="z-depth-1 blue">
+			<ul id="slide-out" class="side-nav">
+				<li>
+						<div class="user-view">
+							<div class="background blue"></div>
+							<a href="#!user"><img class="circle" src="img/ranieri.png"></a>
+							<a href="#!name"><span class="white-text name">Felipe Ranieri</span></a>
+							<a href="#!email"><span class="white-text email">felipe.ranieri@email.com.br</span></a>
+					</div>
+				</li>
+
+				<li>
+					<a href="administracao.html" class="waves-effect">
+						<i class="material-icons small blue-text">account_circle</i>Minha conta
+					</a>
+				</li>
+				<li>
+					<a href="administracao.html" class="waves-effect">
+						<i class="material-icons small blue-text">computer</i>Administração
+					</a>
+				</li>
+				<li>
+					<a href="#!" class="waves-effect">
+						<i class="material-icons small blue-text">trending_up</i>Relatórios
+					</a>
+				</li>
+				<li>
+					<a href="#!" class="waves-effect">
+						<i class="material-icons small red-text darken-1">close</i>Sair
+					</a>
+				</li>
+			</ul>
+			<a href="#" data-activates="slide-out" class="button-collapse flex">
+				<i class="material-icons white-text">menu</i>
+			</a>
+			<p class="right white-text">chooseMoreKnowledge</p>
+		</header>
+		<div class="container">
+			<h1 class="flow-text center">Qual assunto você gostaria de ver no ciclo de aprimoramento?</h1>
+			<section class="row">
+				<presentation-list class="row"></presentation-list>
+
+			</section>
+		</div>
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+		<link rel="import" href="bower_components/polymer/polymer.html">
+		<script>
+			$(document).ready(function() {
+				$(".button-collapse").sideNav();
+				$('.tooltipped').tooltip();
+			});
+		</script>
+	</body>
+</html>
