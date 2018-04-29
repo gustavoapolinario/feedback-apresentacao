@@ -63,10 +63,13 @@
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 		<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 		<link rel="import" href="bower_components/polymer/polymer.html">
+		<script src="js/verify-login.js"></script>
 		<script>
 			$(document).ready(function() {
 				$(".button-collapse").sideNav();
 				$('.tooltipped').tooltip();
+				var verifyLogin = new VerifyLogin();
+				verifyLogin.redirectIfNotLogged()
 			});
 		</script>
 	</body>

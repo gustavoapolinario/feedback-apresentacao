@@ -79,7 +79,7 @@
             this.voted = localStorage.getItem(this.presentation.id + "-voto") == 1;
             this.notifyPath('this.voted', 'changed');
 
-            if( this.voted && localStorage.getItem(this.presentation.id + "-voto-server") != 1 ) {
+            if( localStorage.getItem(this.presentation.id + "-voto-server") !== null ) {
                 this._syncVote()
                 console.log('syncing')
             }
@@ -88,7 +88,7 @@
             console.log('_vote')
             this.voted = this.voted ? 0 : 1;
             localStorage.setItem(this.presentation.id + "-voto", this.voted);
-            localStorage.removeItem(this.presentation.id + "-voto-server")
+            localStorage.setItem(this.presentation.id + "-voto-server", 1);
             this.notifyPath('this.voted', 'changed');
             this._syncVote();
         }
@@ -102,7 +102,7 @@
             var presentationVote = new PresentationVote();
             presentationVote.setVoteToPresentation(this.presentation.id, this.voted)
                 .then(
-                    response => localStorage.setItem(this.presentation.id + "-voto-server", 1),
+                    response => localStorage.removeItem(this.presentation.id + "-voto-server"),
                     error => setTimeout(() => this._syncVote(), 5000)
                 );
         }

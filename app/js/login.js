@@ -47,12 +47,18 @@ class Login {
         return new Promise((resolve, reject) => {
             var headers = {
                 method: "POST",
-                body: body,
-                cors: 'no-cors'
+                body: JSON.stringify(body),
+                cors: 'no-cors',
+                cache: "no-cache",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }
-            headers.method= 'GET'
 
-            fetch(apiUrl, headers)
+			//var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+			//fetch(proxyUrl + apiUrl, headers)
+			fetch(apiUrl)//TEMPORARY
             .then(response => {
                 if(response.ok) {
                     response.json().then(json => {
@@ -89,6 +95,11 @@ class Login {
             document.location = 'presentation-list.html'
         }
         else {
+            document.location = 'login.html'
+        }
+    }
+    redirectIfNotLogged() {
+        if( !this.isLogged() ) {
             document.location = 'login.html'
         }
     }

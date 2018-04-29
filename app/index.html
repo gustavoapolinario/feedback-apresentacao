@@ -60,14 +60,14 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="js/materialize.min.js"></script>
 		<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-		<script src="js/login.js"></script>
+		<script src="js/verify-login.js"></script>
 		<script>
 			$(document).ready(function() {
 				$(".button-collapse").sideNav();
 				$('.tooltipped').tooltip();
 
-				var login = new Login();
-				login.redirect()
+				var verifyLogin = new VerifyLogin();
+				verifyLogin.redirect()
 			});
 		</script>
 	</body>

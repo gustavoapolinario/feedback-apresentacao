@@ -15,186 +15,190 @@
 			:host {
 				vertical-align: middle;
 				text-transform: none;
-            }
-            paper-card {
-                width: 100%;
-                max-width: 500px;
-                margin: auto;
-                display: block;
-                padding: 40px 20px;
-                text-align: center;
-            }
+			}
+			paper-card {
+				width: 100%;
+				max-width: 500px;
+				margin: auto;
+				display: block;
+				padding: 40px 20px;
+				text-align: center;
+			}
 			paper-button > * {
 				vertical-align: middle;
 				text-transform: none;
-            }
-            #h1-login {
-                font-size: 2em;
-                text-align: center;
-                margin-top: 0;
-                margin-bottom: 30px;
-            }
-            #bt-login-google {
-                background-color: var(--google-blue-500);
-                color: white;
-                margin: 20px auto 0;
-                
-                --paper-button-raised-keyboard-focus: {
-                    background-color: var(--google-blue-700) !important;
-                    color: white !important;
-                };
-            }
-            #bt-login-google div {
-                padding: 10px;
-                background-color: white;
-                margin-right: 10px;
-                border-radius: 3px;
-            }
-            #bt-login-google img {
-                max-width: 30px;
-                display: block;
-            }
-            .error {
-                background: var(--google-yellow-300);
-                padding: 10px;
-                border-radius: 5px;
-                border: 1px dotted var(--google-grey-300);
-            }
-            .sucess {
-                background: var(--google-green-300);
-                padding: 10px;
-                color: white;
-                border-radius: 5px;
-                border: 1px dotted var(--google-grey-300);
-            }
-        </style>
+			}
+			#h1-login {
+				font-size: 2em;
+				text-align: center;
+				margin-top: 0;
+				margin-bottom: 30px;
+			}
+			#bt-login-google {
+				background-color: var(--google-blue-500);
+				color: white;
+				margin: 20px auto 0;
+				
+				--paper-button-raised-keyboard-focus: {
+					background-color: var(--google-blue-700) !important;
+					color: white !important;
+				};
+			}
+			#bt-login-google div {
+				padding: 10px;
+				background-color: white;
+				margin-right: 10px;
+				border-radius: 3px;
+			}
+			#bt-login-google img {
+				max-width: 30px;
+				display: block;
+			}
+			.error {
+				background: var(--google-yellow-300);
+				padding: 10px;
+				border-radius: 5px;
+				border: 1px dotted var(--google-grey-300);
+			}
+			.sucess {
+				background: var(--google-green-300);
+				padding: 10px;
+				color: white;
+				border-radius: 5px;
+				border: 1px dotted var(--google-grey-300);
+			}
+		</style>
 
-        <firebase-app
-            auth-domain="presentations-feedback.firebaseapp.com"
-            database-url="https://presentations-feedback.firebaseio.com"
-            api-key="AIzaSyC8nowD_YMvaYrzpp1pQ6M2Po43U6gKu1s"
-            storage-bucket="presentations-feedback.appspot.com"
-            messaging-sender-id="334380619745"
-            project-id="presentations-feedback">
-        </firebase-app>
-        <firebase-auth
-            id="auth"
-            user="{{user}}"
-            provider="google">
-        </firebase-auth>
-        
-        <paper-card>
-            <div>
-                <h1 id="h1-login">Logue com sua conta do google</h1>
+		<firebase-app
+			auth-domain="presentations-feedback.firebaseapp.com"
+			database-url="https://presentations-feedback.firebaseio.com"
+			api-key="AIzaSyC8nowD_YMvaYrzpp1pQ6M2Po43U6gKu1s"
+			storage-bucket="presentations-feedback.appspot.com"
+			messaging-sender-id="334380619745"
+			project-id="presentations-feedback">
+		</firebase-app>
+		<firebase-auth
+			id="auth"
+			user="{{user}}"
+			provider="google"
+			on-error="errorHandler">
+		</firebase-auth>
+		
+		<paper-card>
+			<div>
+				<h1 id="h1-login">Logue com sua conta do google</h1>
 
-                <template is="dom-if" if="{{message}}">
-                    <div class$="{{message.type}}">{{message.text}}</div>
-                </template>
+				<template is="dom-if" if="{{message}}">
+					<div class$="{{message.type}}">{{message.text}}</div>
+				</template>
 
-                <paper-button id="bt-login-google" raised class="" on-tap="signInWithGoogle">
-                    <div>
-                        <img src="img/g-logo.png" alt="Google Logo">
-                    </div>
-                    <span>Sign in with Google</span>
-                </paper-button>
-    
-                <!-- <paper-button on-tap="signOut">
-                    <iron-icon icon="account-circle"></iron-icon>
-                    <span>Sign out with Google</span>
-                </paper-button> -->
-            </div>
+				<paper-button id="bt-login-google" raised class="" on-tap="signInWithGoogle">
+					<div>
+						<img src="img/g-logo.png" alt="Google Logo">
+					</div>
+					<span>Sign in with Google</span>
+				</paper-button>
+	
+				<!-- <paper-button on-tap="signOut">
+					<iron-icon icon="account-circle"></iron-icon>
+					<span>Sign out with Google</span>
+				</paper-button> -->
+			</div>
 
-        </paper-card>
-        
+		</paper-card>
+		
 	</template>
-    <script>
-    class FBLogin extends Polymer.Element {
-        static get is() { return 'fb-login'; }
-        static get properties() {
-            return {
-                user: {
-                    type: Object,
-                    readOnly: false,
-                    notify: true
-                },
+	<script>
+	class FBLogin extends Polymer.Element {
+		static get is() { return 'fb-login'; }
+		static get properties() {
+			return {
+				user: {
+					type: Object,
+              		observer: 'userChange'
+				},
 				signedIn: {
 					type: Boolean,
 					reflectToAttribute: true,
 					value: false
 				},
-                message: {
-                    type: Object,
-                    value: null,
-                }
-            }
-        }
-        signInWithGoogle() {
+				message: {
+					type: Object,
+					value: null,
+				}
+			}
+		}
+		signInWithGoogle() {
 			this.$.auth.signInWithPopup()
-                .then(response => this.signInFBComplete() )
-                .catch(error => this.errorHandler(error) );
-        }
-        errorHandler(e) {
-            var errorMensage = '';
+		}
 
-            switch(e.detail.code) {
-                case 'auth/invalid-email':
-                    errorMensage = 'Erro: Email Inválido!'
-                break;
-                case 'auth/user-not-found':
-                    errorMensage = 'Erro: Usuário não encontrado!';
-                break;
-                case 'auth/wrong-password':
-                    errorMensage = 'Erro: Senha incorreta!';
-                break;
-                default:
-                    errorMensage = 'Erro: ' + e.detail.message;
-            }
-            this.newErrorMessage(errorMensage);
-        }
+		userChange() {
+			if( this.user != null ) {
+				this.signInFBComplete()
+				this.singInToApi();
+			}
+		}
 
-        newErrorMessage(newMensage) {
-            if( this.message==null ) this.message = {};
-            this.message.type = 'error';
-            this.message.text = newMensage;
-        }
+		errorHandler(e) {
+			var errorMensage = '';
 
-        signInFBComplete() {
-            if( this.message==null ) this.message = {};
-            this.message.type = 'sucess';
-            this.message.text = 'Login social concluído com sucesso. Aguarde enquanto seu usuário é criado.';
+			switch(e.detail.code) {
+				case 'auth/invalid-email':
+					errorMensage = 'Erro: Email Inválido!'
+				break;
+				case 'auth/user-not-found':
+					errorMensage = 'Erro: Usuário não encontrado!';
+				break;
+				case 'auth/wrong-password':
+					errorMensage = 'Erro: Senha incorreta!';
+				break;
+				default:
+					errorMensage = 'Erro: ' + e.detail.message;
+			}
+			this.newErrorMessage(errorMensage);
+		}
 
-            this.singInToApi();
-        }
+		newErrorMessage(newMensage) {
+			if( this.message==null ) this.message = {};
+			this.message.type = 'error';
+			this.message.text = newMensage;
+		}
 
-        singInToApi() {
-            var login = new Login();
-            login.displayName = this.user.displayName;
-            login.email = this.user.email;
-            login.photoURL = this.user.photoURL;
-            login.uid = this.user.uid;
-            login.createUser()
-                .then(json => {
-                    login.serverResponse(json)
-                    login.saveToLocalstore()
-                    this.signInComplete()
-                    login.redirect()
-                },
-                error => {
-                    alert(error)
-                });
-        }
-        signInComplete() {
-            if( this.message==null ) this.message = {};
-            this.message.type = 'sucess';
-            this.message.text = 'Login Concluído com sucesso';
-        }
+		signInFBComplete() {
+			if( this.message==null ) this.message = {};
+			this.message.type = 'sucess';
+			this.message.text = 'Login social concluído com sucesso. Aguarde enquanto seu usuário é criado.';
+		}
 
-        signOut() {
-            console.log('signOut')
-            this.message = null;
-            this.$.auth.signOut();
-        }
-    }
-    customElements.define(FBLogin.is, FBLogin);
-    </script>
+		singInToApi() {
+			var login = new Login();
+			login.displayName = this.user.displayName;
+			login.email = this.user.email;
+			login.photoURL = this.user.photoURL;
+			login.uid = this.user.uid;
+			login.createUser()
+				.then(json => {
+					login.serverResponse(json)
+					login.saveToLocalstore()
+					this.signInComplete()
+					login.redirect()
+				},
+				error => {
+					alert(error)
+				});
+		}
+		signInComplete() {
+			if( this.message==null ) this.message = {};
+			this.message.type = 'sucess';
+			this.message.text = 'Login Concluído com sucesso';
+		}
+
+		signOut() {
+			console.log('signOut')
+			this.message = null;
+			this.$.auth.signOut();
+		}
+	}
+	customElements.define(FBLogin.is, FBLogin);
+	</script>
 </dom-module>

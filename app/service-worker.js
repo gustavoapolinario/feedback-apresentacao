@@ -1,24 +1,40 @@
-
-var CACHE_NAME = 'v1.1';
+var CACHE_NAME = 'v1.38';
 var urlsToCache = [
+	'manifest.json',
+
+	//Pages
 	'./',
+	'presentation-list.html',
+
+	//CSS
 	'css/materialize.min.css',
 	'css/mystyle.css',
+
+	//JS
+	'service-worker.js',
 	'service-worker-register.js',
-	'polymer-components/presentation-list.html',
-	'bower_components/polymer/polymer.html',
 	'js/materialize.min.js',
-	'bower_components/webcomponentsjs/webcomponents-loader.js',
-	'img/ranieri.png',
-	'bower_components/polymer/polymer-element.html',
-	'polymer-components/presentation-list-item.html',
+	'js/login.js',
+	'js/verify-login.js',
 	'js/presentation-list.js',
+	'js/presentation-vote.js',
+
+	//Images
+	'img/ranieri.png',
+
+	//Custom Components
+	'polymer-components/presentation-list.html',
+	'polymer-components/presentation-list-item.html',
+
+	//Polymer Objects
+	'bower_components/polymer/polymer.html',
+	'bower_components/webcomponentsjs/webcomponents-loader.js',
+	'bower_components/polymer/polymer-element.html',
 	'bower_components/polymer/lib/mixins/element-mixin.html',
 	'bower_components/polymer/lib/utils/html-tag.html',
 	'bower_components/paper-card/paper-card.html',
 	'bower_components/paper-styles/paper-styles.html',
 	'bower_components/iron-icons/iron-icons.html',
-	'js/presentation-vote.js',
 	'bower_components/polymer/lib/utils/boot.html',
 	'bower_components/polymer/lib/utils/settings.html',
 	'bower_components/polymer/lib/utils/mixin.html',
@@ -72,16 +88,18 @@ var urlsToCache = [
 	'bower_components/polymer/lib/utils/gestures.html',
 	'bower_components/polymer/lib/utils/flattened-nodes-observer.html',
 	'bower_components/shadycss/custom-style-interface.min.js',
-	'js/login.js',
-	'json/apresentacoes.html',
+
+	//External links
 	'https://fonts.googleapis.com/icon?family=Material+Icons',
 	'https://code.jquery.com/jquery-3.2.1.min.js',
 	'https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2',
 	'https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2',
 	'https://fonts.gstatic.com/s/materialicons/v36/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
 	'https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2',
-	'https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic'
+	'https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic',
 	
+	//API
+	'https://cors-anywhere.herokuapp.com/https://feedback-apresentacao.herokuapp.com/api/apresentacoes',
 ];
 
 self.addEventListener('install', function(event) {
@@ -94,11 +112,14 @@ self.addEventListener('install', function(event) {
 
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener('activate', event => {
-	const currentCaches = [urlsToCache, 'runtime'];
+	const currentCaches = [CACHE_NAME, 'runtime'];
 	event.waitUntil(
-		caches.keys()
-		.then(cacheNames => cacheNames.filter(cacheName => !currentCaches.includes(cacheName)))
-		.then(cachesToDelete => Promise.all(cachesToDelete.map(cacheToDelete => caches.delete(cacheToDelete) )) )
+		caches.keys().then(cacheNames => cacheNames.filter(
+			cacheName => !currentCaches.includes(cacheName)
+		))
+		.then(cachesToDelete => Promise.all(
+			cachesToDelete.map(cacheToDelete => caches.delete(cacheToDelete))
+		))
 		.then(() => self.clients.claim())
 	);
 });

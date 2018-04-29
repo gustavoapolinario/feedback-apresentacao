@@ -1,28 +1,34 @@
 "usea strict";
 class PresentationVote {
     get apiUrl() {
-        return 'json/apresentacoes.html'
-        //return 'https://feedback-apresentacao.herokuapp.com/api/apresentacoes';
+        return 'https://feedback-apresentacao.herokuapp.com/api/votos/novo-voto';
     }
 
     setVoteToPresentation(presentationId, voted) {
         var apiUrl = this.apiUrl;
 
-        var login = new Login()
+        var login = new Login();
+
         var body = {
-            presentationId: presentationId,
-            user: login.uid,
-            voted: voted
+            codigoApresentacao: presentationId,
+            codigoUsuario: 1,
+            voto: voted
         }
+
         return new Promise((resolve, reject) => {
             var headers = {
                 method: "POST",
-                body: body,
-                cors: 'no-cors'
+                body: JSON.stringify(body),
+                cors: 'no-cors',
+                cache: "no-cache",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }
-            headers.method= 'GET'
 
-            fetch(apiUrl)
+			var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+			fetch(proxyUrl + apiUrl, headers)
             .then(response => {
                 console.log(response)
                 if(response.ok) {
