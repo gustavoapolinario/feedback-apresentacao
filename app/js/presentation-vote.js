@@ -8,7 +8,19 @@ class PresentationVote {
     addVoteToPresentation(presentationId) {
         var apiUrl = this.apiUrl;
 
+        var login = new Login()
+        var body = {
+            presentationId: presentationId,
+            user: login.uid
+        }
         return new Promise((resolve, reject) => {
+            var headers = {
+                method: "POST",
+                body: body,
+                cors: 'no-cors'
+            }
+            headers.method= 'GET'
+
             fetch(apiUrl)
             .then(response => {
                 if(response.ok) {

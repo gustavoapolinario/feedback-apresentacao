@@ -174,26 +174,19 @@
             login.uid = this.user.uid;
             login.createUser()
                 .then(json => {
-                    this.saveUserToLocalstoreWithResponse(json)
+                    login.serverResponse(json)
+                    login.saveToLocalstore()
+                    this.signInComplete()
+                    login.redirect()
                 },
                 error => {
                     alert(error)
                 });
         }
-        saveUserToLocalstoreWithResponse(json) {
+        signInComplete() {
             if( this.message==null ) this.message = {};
             this.message.type = 'sucess';
             this.message.text = 'Login Concluído com sucesso';
-
-            localStorage.setItem('userId', this.user.uid);
-            localStorage.setItem('image', this.user.photoURL);
-
-            this.redirecionaPosLogado()
-        }
-
-        redirecionaPosLogado() {
-            //console.log('redirecionando')
-            document.location = 'presentation-list.html';
         }
 
         signOut() {
