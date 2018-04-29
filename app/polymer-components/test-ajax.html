@@ -1,0 +1,99 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="test-ajax">
+    <template>
+        <style is="custom-style">
+            paper-button {
+                margin-top: 30px;
+                background-color: var(--paper-green-500);
+                color: white;
+            }
+            paper-button:hover {
+                background-color: var(--paper-indigo-100);
+            }
+        </style>
+
+		<form id="formLogin" on-submit="ajax">
+            <paper-input label="Proxy" value="{{proxy}}"></paper-input>
+
+            <paper-input label="API url" value="{{url}}"></paper-input>
+
+            <paper-input label="Method ('GET' ou 'POST')" value="{{method}}"></paper-input>
+
+            <paper-input label="Cors (vazio ou 'no-cors')" value="{{cors}}"></paper-input>
+
+            <template is="dom-if" if="{{isPost(method)}}">
+                <paper-textarea label="Body" value="{{body}}"></paper-textarea>
+            </template>
+
+            <paper-button raised on-tap="ajax">Executa Ajax</paper-button>
+        </form>
+
+        {{message}}
+        <paper-textarea label="Json retornado pelo servidor" value="{{json}}"></paper-textarea>
+
+    </template>
+    <script>
+    class TestAjax extends Polymer.Element {
+        static get is() { return 'test-ajax'; }
+        static get properties() {
+            return {
+                proxy: {
+                    type: String,
+                    value: 'https://cors-anywhere.herokuapp.com/'
+                },
+                url: {
+                    type: String,
+                    value: 'https://feedback-apresentacao.herokuapp.com/api/apresentacoes'
+                },
+                method: {
+                    type: String,
+                    value: 'GET'
+                },
+                cors: {
+                    type: String,
+                    value: 'no-cors'
+                },
+                body: {
+                    type: String,
+                    value: '{"codigoApresentacao": 1,"codigoUsuario": 1,"voto": 1}'
+                },
+                json: {
+                    type: String,
+                    value: ''
+                },
+                message: {
+                    type: String,
+                    value: ''
+                },
+            }
+        }
+        ajax() {
+            var options = {}
+            if( this.method != '' ) options.method = this.method
+            if( this.cors != '' ) options.cors = this.cors
+            if( this.method == 'POST' && this.body != '' ) options.body = JSON.stringify(this.body)
+
+			fetch(this.proxy + this.url, options)
+			.then(response => {
+				if(response.ok) {
+					response.text().then(json => {
+                        this.message = ''
+						this.json = json
+					});
+				}
+				else {
+					this.message = 'Erro ao fazer o request'
+				}
+			})
+        }
+        isPost(value) {
+            return value == 'POST'
+        }
+    }
+    customElements.define(TestAjax.is, TestAjax);
+    </script>
+</dom-module>
