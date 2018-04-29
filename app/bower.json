@@ -2,7 +2,7 @@
   "name": "feedback-apresentacao",
   "homepage": "https://github.com/gustavoapolinario/feedback-apresentacao",
   "description": "App para Feedback das apresentacoes",
-  "main": "index.html",
+  "main": "presentation-list.html",
   "license": "CC BY-NC-ND 4.0",
   "ignore": [
     "**/.*",

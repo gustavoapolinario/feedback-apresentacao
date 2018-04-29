@@ -2,6 +2,8 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<script src="../js/presentation-vote.js"></script>
+<script src="../js/login.js"></script>
 
 <dom-module id="presentation-list-item">
     <template>
@@ -44,7 +46,7 @@
                 </p>
             </article>
             <div class$="card-actions {{_classVoted(this.voted)}}">
-                <iron-icon icon="icons:{{_classFavoriteVoted(this.voted)}}" on-click="_votar"></iron-icon>
+                <iron-icon icon="icons:{{_classFavoriteVoted(this.voted)}}" on-click="_vote"></iron-icon>
                 <paper-button class="fr">#queroTeVerNoCiclo</paper-button>
             </div>
         </paper-card>
@@ -76,11 +78,33 @@
             super.ready();
             this.voted = localStorage.getItem(this.presentation.id + "-voto") == 1;
             this.notifyPath('this.voted', 'changed');
+
+            if( this.voted && localStorage.getItem(this.presentation.id + "-voto-server") != 1 ) {
+                this._syncVote()
+                console.log('syncing')
+            }
         }
-        _votar() {
+        _vote() {
+            console.log('_vote')
             this.voted = this.voted ? 0 : 1;
             localStorage.setItem(this.presentation.id + "-voto", this.voted);
+            localStorage.removeItem(this.presentation.id + "-voto-server")
             this.notifyPath('this.voted', 'changed');
+            this._syncVote();
+        }
+        _syncVote() {
+            if( !navigator.onLine ) {
+                console.log('_syncVote - timout')
+                setTimeout(() => this._syncVote(), 5000);
+                return;
+            }
+
+            var presentationVote = new PresentationVote();
+            presentationVote.setVoteToPresentation(this.presentation.id, this.voted)
+                .then(
+                    response => localStorage.setItem(this.presentation.id + "-voto-server", 1),
+                    error => setTimeout(() => this._syncVote(), 5000)
+                );
         }
     }
     customElements.define(PresentationListItem.is, PresentationListItem);

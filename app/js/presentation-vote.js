@@ -5,13 +5,14 @@ class PresentationVote {
         //return 'https://feedback-apresentacao.herokuapp.com/api/apresentacoes';
     }
 
-    addVoteToPresentation(presentationId) {
+    setVoteToPresentation(presentationId, voted) {
         var apiUrl = this.apiUrl;
 
         var login = new Login()
         var body = {
             presentationId: presentationId,
-            user: login.uid
+            user: login.uid,
+            voted: voted
         }
         return new Promise((resolve, reject) => {
             var headers = {
@@ -23,13 +24,14 @@ class PresentationVote {
 
             fetch(apiUrl)
             .then(response => {
+                console.log(response)
                 if(response.ok) {
                     response.json().then(json => {
                         resolve(json);
                     });
                 }
                 else {
-                    reject('Erro ao tentar pegar a lista de apresentações')
+                    reject()
                 }
             })
               
