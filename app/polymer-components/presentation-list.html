@@ -1,7 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <link rel="import" href="presentation-list-item.html">
-<script type="text/javascript" src="../js/presentation-list.js"></script>
-
+<link rel="import" href="firebase-app.html">
 
 <dom-module id="presentation-list">
     <template>
@@ -28,11 +29,24 @@
                 }
             }
         </style>
+
+
+        <firebase-query
+            path="/presentations"
+            data="{{liveData}}">
+        </firebase-query>
+        <app-indexeddb-mirror
+            key="presentationList"
+            data="{{liveData}}"
+            persisted-data="{{presentations}}">
+        </app-indexeddb-mirror>
+
         <template is="dom-repeat" items="{{presentations}}">
             <presentation-list-item is="dom-repeat" name="presentation-list-item"
                         presentation="{{item}}"
                         class="col m4 s12"></presentation-list-item>
         </template>
+
     </template>
     <script>
     class PresentationList extends Polymer.Element {
@@ -43,19 +57,13 @@
                     type: Object,
                     readOnly: false,
                     notify: true
+                },
+                user: {
+                    type: Object,
+                    readOnly: false,
+                    notify: true
                 }
             }
-        }
-        constructor() {
-            super();
-            var presentationListModel = new PresentationListModel();
-            presentationListModel.getList()
-                .then(json => {
-                    this.presentations = json
-                },
-                error => {
-                    alert(error)
-                });
         }
     }
     customElements.define(PresentationList.is, PresentationList);

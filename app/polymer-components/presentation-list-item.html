@@ -1,7 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="firebase-app.html">
 <script src="../js/presentation-vote.js"></script>
 <script src="../js/login.js"></script>
 
@@ -35,14 +39,30 @@
         }
         </style>
 
+        <firebase-auth
+            id="auth"
+            user="{{user}}"
+            provider="google"
+            on-error="errorHandler">
+        </firebase-auth>
+        <firebase-query
+            path="/votes/[[presentation.$key]]/[[user.uid]]"
+            data="{{liveVoted}}">
+        </firebase-query>
+        <app-indexeddb-mirror
+            key="presentationList"
+            data="{{liveVoted}}"
+            persisted-data="{{voted}}">
+        </app-indexeddb-mirror>
+
         <paper-card>
             <article class="card-content">
-                <h2 class="blue-text flow-text">[[presentation.titulo]]</h2>
+                <h2 class="blue-text flow-text">[[presentation.title]]</h2>
                 <p>
-                    [[presentation.descricao]]
+                    [[presentation.description]]
                 </p>
                 <p>
-                    por: [[presentation.apresentador]]
+                    por: [[presentation.author]]
                 </p>
             </article>
             <div class$="card-actions {{_classVoted(this.voted)}}">
@@ -61,50 +81,30 @@
                     readOnly: false,
                     notify: true
                 },
+                liveVoted: {
+                    type: Object,
+                    readOnly: false,
+                    notify: true
+                },
                 voted: {
-                    type: Boolean,
+                    type: Object,
                     readOnly: false,
                     notify: true
                 },
             }
         }
         _classVoted(voted) {
+            console.log(this.voted)
             return this.voted ? 'active' : 'inactive';
         }
         _classFavoriteVoted(voted) {
+            console.log(this.voted)
             return this.voted ? 'favorite' : 'favorite-border';
-        }
-        ready() {
-            super.ready();
-            this.voted = localStorage.getItem(this.presentation.id + "-voto") == 1;
-            this.notifyPath('this.voted', 'changed');
-
-            if( localStorage.getItem(this.presentation.id + "-voto-server") !== null ) {
-                this._syncVote()
-                console.log('syncing')
-            }
         }
         _vote() {
             console.log('_vote')
-            this.voted = this.voted ? 0 : 1;
-            localStorage.setItem(this.presentation.id + "-voto", this.voted);
-            localStorage.setItem(this.presentation.id + "-voto-server", 1);
+            this.voted = this.liveVoted = this.voted ? 0 : 1;
             this.notifyPath('this.voted', 'changed');
-            this._syncVote();
-        }
-        _syncVote() {
-            if( !navigator.onLine ) {
-                console.log('_syncVote - timout')
-                setTimeout(() => this._syncVote(), 5000);
-                return;
-            }
-
-            var presentationVote = new PresentationVote();
-            presentationVote.setVoteToPresentation(this.presentation.id, this.voted)
-                .then(
-                    response => localStorage.removeItem(this.presentation.id + "-voto-server"),
-                    error => setTimeout(() => this._syncVote(), 5000)
-                );
         }
     }
     customElements.define(PresentationListItem.is, PresentationListItem);

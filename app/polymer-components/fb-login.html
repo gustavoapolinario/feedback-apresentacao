@@ -1,13 +1,12 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<script src="../bower_components/firebase/firebase.js"></script>
 <script src="../js/login.js"></script>
+<link rel="import" href="firebase-app.html">
 
 <dom-module id="fb-login">
 	<template>
@@ -69,14 +68,6 @@
 			}
 		</style>
 
-		<firebase-app
-			auth-domain="presentations-feedback.firebaseapp.com"
-			database-url="https://presentations-feedback.firebaseio.com"
-			api-key="AIzaSyC8nowD_YMvaYrzpp1pQ6M2Po43U6gKu1s"
-			storage-bucket="presentations-feedback.appspot.com"
-			messaging-sender-id="334380619745"
-			project-id="presentations-feedback">
-		</firebase-app>
 		<firebase-auth
 			id="auth"
 			user="{{user}}"
