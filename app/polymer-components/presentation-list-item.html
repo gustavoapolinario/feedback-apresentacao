@@ -1,12 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="firebase-app.html">
-<script src="../js/presentation-vote.js"></script>
 <script src="../js/login.js"></script>
 
 <dom-module id="presentation-list-item">
@@ -45,14 +44,14 @@
             provider="google"
             on-error="errorHandler">
         </firebase-auth>
-        <firebase-query
+        <firebase-document id="voteDocument"
             path="/votes/[[presentation.$key]]/[[user.uid]]"
             data="{{liveVoted}}">
-        </firebase-query>
+        </firebase-document>
         <app-indexeddb-mirror
             key="presentationList"
             data="{{liveVoted}}"
-            persisted-data="{{voted}}">
+            persisted-data="{{persistedVoted}}">
         </app-indexeddb-mirror>
 
         <paper-card>
@@ -77,34 +76,45 @@
         static get properties() {
             return {
                 presentation: {
-                    type: Object,
-                    readOnly: false,
-                    notify: true
+                    type: Object
                 },
                 liveVoted: {
+                    type: Object
+                },
+                liveVoted2: {
+                    type: Object
+                },
+                persistedVoted: {
                     type: Object,
-                    readOnly: false,
-                    notify: true
+                    observer: 'persistedVotedChanged'
                 },
                 voted: {
-                    type: Object,
-                    readOnly: false,
-                    notify: true
+                    type: Boolean
                 },
             }
         }
         _classVoted(voted) {
-            console.log(this.voted)
             return this.voted ? 'active' : 'inactive';
         }
         _classFavoriteVoted(voted) {
-            console.log(this.voted)
             return this.voted ? 'favorite' : 'favorite-border';
         }
-        _vote() {
-            console.log('_vote')
-            this.voted = this.liveVoted = this.voted ? 0 : 1;
+        constructor() {
+            super();
+            this.voted = 0;
             this.notifyPath('this.voted', 'changed');
+        }
+        _vote() {
+            this.voted = this.voted ? null : 1;
+            //this.persistedVoted = this.voted;
+            this.liveVoted = this.persistedVoted = this.voted;
+            this.notifyPath('this.voted', 'changed');
+        }
+        persistedVotedChanged(newData, oldData) {
+            if( newData != null && newData != 'undefined' ) {
+                this.voted = newData == 1 ? 1 : 0;
+                this.notifyPath('this.voted', 'changed');
+            }
         }
     }
     customElements.define(PresentationListItem.is, PresentationListItem);
