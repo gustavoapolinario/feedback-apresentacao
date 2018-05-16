@@ -27,8 +27,7 @@ class PresentationVote {
                 }
             }
 
-			var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-			fetch(proxyUrl + apiUrl, headers)
+			fetch(apiUrl, headers)
             .then(response => {
                 console.log(response)
                 if(response.ok) {

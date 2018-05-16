@@ -8,9 +8,8 @@ class PresentationListModel {
 		var apiUrl = this.apiUrl;
 
 		return new Promise((resolve, reject) => {
-			var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 			var options = {cors:'no-cors'}
-			fetch(proxyUrl + apiUrl, options)
+			fetch(apiUrl, options)
 			.then(response => {
 				if(response.ok) {
 					response.json().then(json => {
