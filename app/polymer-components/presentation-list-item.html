@@ -81,20 +81,19 @@
 
             if( localStorage.getItem(this.presentation.id + "-voto-server") !== null ) {
                 this._syncVote()
-                console.log('syncing')
             }
         }
         _vote() {
-            console.log('_vote')
-            this.voted = this.voted ? 0 : 1;
-            localStorage.setItem(this.presentation.id + "-voto", this.voted);
-            localStorage.setItem(this.presentation.id + "-voto-server", 1);
-            this.notifyPath('this.voted', 'changed');
-            this._syncVote();
+            if( !this.voted ) {
+                this.voted = this.voted ? 0 : 1;
+                localStorage.setItem(this.presentation.id + "-voto", this.voted);
+                localStorage.setItem(this.presentation.id + "-voto-server", 1);
+                this.notifyPath('this.voted', 'changed');
+                this._syncVote();
+            }
         }
         _syncVote() {
             if( !navigator.onLine ) {
-                console.log('_syncVote - timout')
                 setTimeout(() => this._syncVote(), 5000);
                 return;
             }
