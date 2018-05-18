@@ -84,13 +84,11 @@
             }
         }
         _vote() {
-            if( !this.voted ) {
-                this.voted = this.voted ? 0 : 1;
-                localStorage.setItem(this.presentation.id + "-voto", this.voted);
-                localStorage.setItem(this.presentation.id + "-voto-server", 1);
-                this.notifyPath('this.voted', 'changed');
-                this._syncVote();
-            }
+            this.voted = this.voted ? 0 : 1;
+            localStorage.setItem(this.presentation.id + "-voto", this.voted);
+            localStorage.setItem(this.presentation.id + "-voto-server", 1);
+            this.notifyPath('this.voted', 'changed');
+            this._syncVote();
         }
         _syncVote() {
             if( !navigator.onLine ) {
